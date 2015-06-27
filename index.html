@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+						
+		<script src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
+				id='sap-ui-bootstrap'
+				data-sap-ui-libs='sap.m,sap.ui.layout,sap.ui.commons,sap.ui.core'
+				data-sap-ui-theme='sap_bluecrystal'>
+		</script>		
+		
+		<script>	
+		sap.ui.localResources("src/view");	
+		sap.ui.localResources("src/model");
+		sap.ui.localResources("src/images");
+		
+	    var oSplitApp = new sap.m.SplitApp("mySplitApp", {});
+	    
+		/*var dataObject = { data : [
+			{index:0, nombre: "Nombre1", apellidos: "Apellido1"},
+	        {index:1, nombre: "Nombre2", apellidos: "Apellido1"},
+        	{index:2, nombre: "Nombre3", apellidos: "Apellido1"},
+        	{index:3, nombre: "Nombre4", apellidos: "Apellido1"}
+		]};*/
+	//	var oModelMaster = new sap.ui.model.json.JSONModel();
+		 //oModelMaster.loadData("model/data.json");
+	//	oModelMaster.setData(dataObject);
+					
+		var masterPage = sap.ui.view({id: "masterPage", type:sap.ui.core.mvc.ViewType.JS, viewName:"src.view.master"});     
+		
+		var detailPage = sap.ui.view({id: "detailPage", type:sap.ui.core.mvc.ViewType.JS, viewName:"src.view.detail"});
+		
+       // var listUser = new sap.m.StandardListItem(
+       // 	{	title: "{/nombre}", type:"Navigation", press: function(){oSplitApp.toDetail("detail1")} }            
+       // );
+        
+ 		oSplitApp.addMasterPage(masterPage);
+ 		oSplitApp.addDetailPage(detailPage);
+ 		oSplitApp.setDefaultTransitionNameDetail("fade");
+ 
+ 		oSplitApp.placeAt("content");  			    
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+	</body>
+</html>
