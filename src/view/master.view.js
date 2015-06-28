@@ -17,81 +17,81 @@ sap.ui.jsview("src.view.master", {
 		
 		var oModelMaster = new sap.ui.model.json.JSONModel();
 		oModelMaster.setData(dataObject);
-		
-		/*var oRowTemplate = new sap.ui.commons.TextView({
-          text: "{nombre}"
-        });*/
+	  
 		
 	/*	var oObjectListItem = new sap.m.ObjectListItem("objectListItem", {
 			title:"adfasdfs",
 			attributes:"{nombre}"
 		});*/
 		
-		var oItemTemplate = new sap.ui.core.ListItem({text:"{nombre}"});
-		
-		var oRowTemplate = new sap.ui.commons.Message("rowTemplate", {
-    		nombre : "{nombre}",
-    		apellidos : "{apellidos}",
-    		imagen: "{imagen}"
-		});
-		
-		/*var oRowTemplate = new sap.ui.commons.Label("l1", {
-   		 // bind text property of textfield to firstName property in the model
-    	setText: "{nombre}"
-		});*/
-
-		/*var oRowTemplate = new sap.ui.commons.layout.MatrixLayout("theMatrix");
-				
-		var  matrixRow, matrixCell, control;
-		// main matrix 
-		oRowTemplate.setWidth("70%");
-		// main row
-		matrixRow = new sap.ui.commons.layout.MatrixLayoutRow();
-
-		//image
-		control = new sap.ui.commons.Image();
-		control.setHeight("60px");
-		control.setWidth("50px");
-		control.bindProperty("src","src");
-		matrixCell = new sap.ui.commons.layout.MatrixLayoutCell();
-		matrixCell.addContent(control);
-		matrixRow.addCell(matrixCell);
-
-		//label nombre
-		control = new sap.ui.commons.Label();
-		control.bindProperty("text","nombre");
-		matrixCell = new sap.ui.commons.layout.MatrixLayoutCell();
-		matrixCell.addContent(control);
-		matrixRow.addCell(matrixCell);
-		
-		//label apellidos
-		control = new sap.ui.commons.Label();
-		control.bindProperty("text","apellidos");
-		matrixCell = new sap.ui.commons.layout.MatrixLayoutCell();
-		matrixCell.addContent(control);
-		matrixRow.addCell(matrixCell);*/		
-	
-		var oTitle = new sap.ui.core.Title({text:"Employees", icon:"src/images/sapLogo.gif", tooltip:"Employees"});
-		var oRowRepeater = new sap.ui.commons.RowRepeater("rowRepeater", {
-    		design: "Standard",
-    		numberOfRows: 10,
-    		currentPage: 1,
-    		title: oTitle,
-    		press: oController.doSomething, 
-    		// bind row aggregation
-    		rows : {path : "/data", template : oRowTemplate}
-		});		
-		oRowRepeater.setNoData(new sap.ui.commons.TextView({text: "Sory, no data available!"}));
-		oRowRepeater.bindRows("/data", oRowTemplate);
-		
 		var oPage = new sap.m.Page("master", {
-			title: "Master",
+			title: "{i18n>MasterTitle}",
+			//title: "Nombre",
 	       	content: []
 	    });
-		
-		//oRowTemplate.addRow(matrixRow);		
-		oPage.addContent(oRowRepeater);
+
+	    var oSearchField = new sap.m.SearchField("searchField", {
+	        placeholder: "Buscar", 
+	        width: "100%",
+	        showSearchButton: true,
+		    showRefreshButton: true
+	    });
+
+		var oToolbar = new sap.ui.commons.Toolbar("toolBar");
+	    oToolbar.setDesign(sap.ui.commons.ToolbarDesign.Standard);
+	    oToolbar.addItem(oSearchField);
+
+	    oPage.addContent(oToolbar);
+
+	    var oList = new sap.m.List("list", {
+	       selectionChange:"ontemSelect",
+	       modeAnimationOn: false,
+	       includeItemInSelection: true,
+	       growing: true,
+	       growingScrollToLoad: true,
+	       swipe:"onSwipe"
+	    });
+	
+	    var oObjectListItem = new sap.m.ObjectListItem("objectListItem", {
+	        iconDensityAware: false,
+	        title:"{nombre}"
+	       // attributes:"{nombre}"
+	        
+	    });
+	    oList.bindAggregation("items", "/data", oObjectListItem);
+	    oPage.addContent(oList);
+	        
+	
+/*	<List
+				id="list" selectionChange="onItemSelect" modeAnimationOn="false" includeItemInSelection="true" mode="{viewProperties>/listMode}"
+				growing="true" growingScrollToLoad="true" updateFinished="onUpdateFinished" updateStarted="onUpdateStarted" noDataText="{viewProperties>/noDataText}" swipe="onSwipe" >
+				<ObjectListItem
+					id="objectListItem" type="{device>/listItemType}" press="onItemSelect" 
+					icon="{ImageUrl}" iconDensityAware="false" title="{Name}" numberUnit="{CurrencyCode}"
+					number="{parts:[{path:'Price'},{path:'CurrencyCode'}], formatter:'sap.ca.ui.model.format.AmountFormat.FormatAmountStandard'}" >
+					<attributes>
+						<ObjectAttribute text="{MainCategoryName}" />
+						<ObjectAttribute text="{SubCategoryName}" />
+					</attributes>
+				</ObjectListItem>
+				<infoToolbar>
+					<Toolbar visible="{viewProperties>/filterToolbarVisible}">
+						<Label text="{viewProperties>/filterInfoText}" />
+					</Toolbar>
+				</infoToolbar>
+				<swipeContent>
+					<Button text="{i18n>xbut.delete}" type="Reject" tap="onSwipeDeleteItem" />
+				</swipeContent>
+			</List>*/
+	
 		oPage.setModel(oModelMaster);
+		
+		var footer = new sap.m.Bar({
+					contentMiddle : [ new sap.m.Label({
+						text : "Footer"
+					}) ]
+				});
+		oPage.addContent(footer);
 		
 	   	return oPage;
 	}

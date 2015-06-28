@@ -12,15 +12,12 @@ sap.ui.jsview("src.view.detail", {
 	  oPanel.addContent(image);	  	 
 	  
 	  var oPage = new sap.m.Page("detail", {
-	   	title: "Detail",
-          	content: [	]
-      		});
-		// button text is bound to Model, "press" action is bound to Controller's event handler
+	   	title: "Detalle empleado",
+       	content: []
+      });
    	  
    	  oPage.addContent(oPanel);
-   	  
-   	  
-   	  var oIconTabBar = new sap.m.IconTabBar("iconTabBar",{
+   	 var oIconTabBar = new sap.m.IconTabBar("iconTabBar",{
    	  	 expanded : "{device>/isNoPhone}",
                       select : function(oEvent){
                                oController.handleTabSelect(oEvent);
@@ -35,6 +32,7 @@ sap.ui.jsview("src.view.detail", {
                      })]
    	  });
    	  oPage.addContent(oIconTabBar);
+   	  
    	  
    	  return oPage;
 	}

@@ -1,5 +1,13 @@
 sap.ui.controller("src.view.master", {
 			
+//	onInit : function (evt) {
+    // set explored app's demo model on this sample
+//        var oModelMaster = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("sap.ui.demo.mock", "/empleados.json"));
+        //var oModelMaster = new sap.ui.model.json.JSONModel();
+        //oModelMaster.loadData('/empleados.json');
+        //this.getView().setModel(oModelMaster);
+  //  },
+	
 	// implement an event handler in the Controller
 	doSomething: function() {
 		alert("Hello World!");
